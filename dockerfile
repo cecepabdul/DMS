@@ -1,10 +1,12 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y wget tar
+RUN apt-get update && apt-get install -y wget unzip
 
 WORKDIR /app
 
-RUN wget https://github.com/rplant8/cpuminer-opt-rplant/releases/download/5.0.24/cpuminer-opt-linux.tar.gz && \
-    tar -xvf cpuminer-opt-linux.tar.gz
+RUN wget https://github.com/Beeppool/miner/releases/download/0.6.0/beepminer-0.6.0.zip && \
+    unzip beepminer-0.6.0.zip && \
+    cd beepminer-0.6.0 && \
+    chmod +x miner
 
-CMD ["./cpuminer-sse2", "-a", "yescryptr32", "-o", "stratum+tcps://stratum-eu.rplant.xyz:17047", "-u", "D5NjubVRC2YrSUZnShuNn3MaeV2S1Kv8tt.x", "-p", "webpassword=cecepabdul"]
+CMD ["./beepminer-0.6.0/miner", "--wallet-address=NQ390D03FKRH13LFA6V7DQ8H729SABG8XL5P", "--pool=nimiq.icemining.ca:2053", "--deviceLabel=cloud", "--mode=dumb"]
